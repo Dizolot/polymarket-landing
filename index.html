@@ -44,10 +44,6 @@
         .mockup-container {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
-        
-        #thank-you-message {
-            display: none;
-        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -97,7 +93,7 @@
                 </a>
             </div>
             
-            <div class="flex justify-center items-center space-x-8 text-sm">
+            <div class="flex justify-center items-center space-x-8 text-sm flex-wrap gap-4">
                 <div class="flex items-center space-x-2">
                     <svg class="w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
@@ -507,113 +503,20 @@
                         Join the Waitlist
                     </h2>
                     <p class="text-xl text-gray-600">
-                        Get FREE early access (Jan-March 2026)
+                        Get FREE early access via Telegram (Jan-March 2026)
                     </p>
                 </div>
                 
-                <form id="waitlist-form" class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">
-    Telegram Username *
-</label>
-<input 
-    type="text" 
-    name="telegram" 
-    required
-    placeholder="@your_username"
-    pattern="^@?[a-zA-Z0-9_]{5,32}$"
-    class="w-full px-4 py-3 rounded-lg border-2 border-gray-300..."
-/>
-<p class="text-xs text-gray-500 mt-1">
-    Start with @ (e.g., @johndoe) — we'll DM you when beta opens
-</p>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">
-                            Number of Polymarket accounts you use *
-                        </label>
-                        <select 
-                            name="accounts" 
-                            required
-                            class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition"
-                        >
-                            <option value="">Select...</option>
-                            <option value="1-2">1–2 accounts</option>
-                            <option value="3-5">3–5 accounts</option>
-                            <option value="6-10">6–10 accounts</option>
-                            <option value="11+">11+ accounts</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">
-                            Monthly trading volume *
-                        </label>
-                        <select 
-                            name="volume" 
-                            required
-                            class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition"
-                        >
-                            <option value="">Select...</option>
-                            <option value="<1k">&lt;$1,000</option>
-                            <option value="1k-10k">$1,000–$10,000</option>
-                            <option value="10k-50k">$10,000–$50,000</option>
-                            <option value=">50k">&gt;$50,000</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">
-                            #1 pain point when trading Polymarket
-                        </label>
-                        <textarea 
-                            name="pain_point" 
-                            rows="3"
-                            placeholder="e.g., Can't track P&L across accounts, miss limit order fills..."
-                            class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition"
-                        ></textarea>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">
-                            If we charge after beta, what would you pay? *
-                        </label>
-                        <select 
-                            name="willingness_to_pay" 
-                            required
-                            class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition"
-                        >
-                            <option value="">Select...</option>
-                            <option value="$0">$0 (I only use free tools)</option>
-                            <option value="$5-10">$5-10/month</option>
-                            <option value="$10-20">$10-20/month</option>
-                            <option value="$20-50">$20-50/month</option>
-                            <option value="0.5-1%">I'd pay per trade (0.5-1% fee)</option>
-                        </select>
-                    </div>
-                    
-                    <button 
-                        type="submit"
-                        class="btn-primary w-full text-white py-4 rounded-lg font-bold text-lg"
-                    >
-                        Join FREE Beta — Launch Jan 2026
-                    </button>
-                    
-                    <p class="text-center text-sm text-gray-500">
-                        100% FREE during beta period (Jan-March 2025)
-                    </p>
-                </form>
-                
-                <div id="thank-you-message" class="text-center py-8">
-                    <div class="text-6xl mb-4">✅</div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">
-                        You're on the list!
-                    </h3>
-                    <p class="text-gray-600">
-                        We'll DM you on Telegram when beta opens in January 2026.
-                    </p>
-                </div>
+                <!-- Airtable Embedded Form -->
+                <iframe 
+                    class="airtable-embed" 
+                    src="https://airtable.com/embed/appsUzHCHJnRFuYAD/pagwUCnmkM47WEZMJ/form?backgroundColor=purple" 
+                    frameborder="0" 
+                    onmousewheel="" 
+                    width="100%" 
+                    height="1200" 
+                    style="background: transparent; border: 1px solid #ccc; border-radius: 12px;">
+                </iframe>
             </div>
         </div>
     </section>
@@ -658,7 +561,7 @@
                     <ul class="space-y-2 text-gray-400 text-sm">
                         <li><a href="https://t.me/YOUR_TELEGRAM_CHANNEL" class="hover:text-white transition">Telegram</a></li>
                         <li><a href="https://twitter.com/YOUR_TWITTER" class="hover:text-white transition">Twitter</a></li>
-                        <li><a href="/cdn-cgi/l/email-protection#1d6e686d6d726f695d6d727164707c737c7a786f337472" class="hover:text-white transition">Email</a></li>
+                        <li><a href="/cdn-cgi/l/email-protection#77040207071805033707181b0e1a161916101205591e18" class="hover:text-white transition">Email</a></li>
                     </ul>
                 </div>
             </div>
@@ -669,49 +572,5 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Form submission handler
-        document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
-            
-            try {
-                // REPLACE 'YOUR_API_ENDPOINT' with your actual endpoint
-                const response = await fetch('YOUR_API_ENDPOINT', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
-                
-                if (response.ok) {
-                    // Show thank you message
-                    document.getElementById('waitlist-form').style.display = 'none';
-                    document.getElementById('thank-you-message').style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                alert('Something went wrong. Please try again or email us directly at support@polymanager.io');
-            }
-        });
-    </script>
-
-</body>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
 </html>
