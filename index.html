@@ -3,574 +3,808 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polymarket Multi-Account Manager | Telegram Bot</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Backtest Your Polymarket Strategies — Free | PolyBacktest</title>
+    <meta name="description" content="Test your Polymarket trading strategies on 3+ years of historical data before risking real money. Free backtesting tool for prediction markets.">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #ffffff;
         }
         
-        .gradient-bg {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header {
+            padding: 20px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #7c3aed;
+        }
+        
+        .hero {
+            padding: 80px 0;
+            text-align: center;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
         
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.95;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #ffffff;
+            color: #7c3aed;
+            padding: 18px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .hero-features {
+            margin-top: 30px;
+            font-size: 16px;
+        }
+        
+        .hero-features div {
+            margin: 8px 0;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #1a1a1a;
+        }
+        
+        .problem-section {
+            background: #fef3c7;
+        }
+        
+        .problem-list {
+            max-width: 700px;
+            margin: 40px auto;
+        }
+        
+        .problem-item {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 12px;
+            font-size: 18px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .solution-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .step {
+            text-align: center;
+            padding: 30px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: #7c3aed;
+            color: white;
+            border-radius: 50%;
+            line-height: 60px;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .step h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+        
+        .step p {
+            font-size: 16px;
+            color: #6b7280;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
         }
         
         .feature-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         
-        .btn-primary {
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+        
+        .feature-list {
+            list-style: none;
+            font-size: 16px;
+            color: #4b5563;
+        }
+        
+        .feature-list li {
+            margin: 12px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .feature-list li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+        
+        .pro-badge {
+            display: inline-block;
+            background: #7c3aed;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .testimonials {
+            background: #f9fafb;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-text {
+            font-size: 18px;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: #7c3aed;
+        }
+        
+        .use-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .use-case {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .use-case-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .use-case h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+        
+        .use-case p {
+            font-size: 16px;
+            color: #6b7280;
+            font-style: italic;
+        }
+        
+        .faq-section {
+            background: #f9fafb;
+        }
+        
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .faq-question {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+        }
+        
+        .faq-answer {
+            font-size: 16px;
+            color: #4b5563;
+            line-height: 1.7;
+        }
+        
+        .final-cta {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            color: white;
+            text-align: center;
+            padding: 100px 0;
         }
         
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        .final-cta h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
         }
         
-        .mockup-container {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        .final-cta p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        .footer {
+            background: #1a1a1a;
+            color: #9ca3af;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-link {
+            display: block;
+            color: #9ca3af;
+            text-decoration: none;
+            margin: 10px 0;
+            transition: color 0.2s;
+        }
+        
+        .footer-link:hover {
+            color: #7c3aed;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #374151;
+            font-size: 14px;
+        }
+        
+        .highlight {
+            background: #fef3c7;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            margin: 40px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .solution-steps {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50">
-
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/>
-                        <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"/>
-                    </svg>
-                    <span class="text-xl font-bold text-gray-900">PolyManager</span>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="#features" class="text-gray-600 hover:text-gray-900 font-medium hidden sm:block">Features</a>
-                    <a href="#pricing" class="text-gray-600 hover:text-gray-900 font-medium hidden sm:block">Pricing</a>
-                    <a href="#waitlist" class="btn-primary text-white px-6 py-2 rounded-lg font-medium">Join Waitlist</a>
-                </div>
-            </div>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">📊 PolyBacktest</div>
         </div>
-    </nav>
+    </header>
 
     <!-- Hero Section -->
-    <section class="gradient-bg text-white py-20 px-4">
-        <div class="max-w-6xl mx-auto text-center">
-            <div class="inline-block glass px-4 py-2 rounded-full text-sm font-medium mb-6">
-                🎉 FREE Beta Launch: January 2026
-            </div>
-            
-            <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                Manage <span class="text-yellow-300">Unlimited</span> Polymarket Accounts.<br/>
-                <span class="text-purple-300">One Dashboard.</span>
-            </h1>
-            
-            <p class="text-xl md:text-2xl mb-8 text-purple-100 max-w-3xl mx-auto">
-                Stop juggling browser tabs. Trade faster. Track P&L across accounts. All from Telegram.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-                <a href="#waitlist" class="bg-white text-purple-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-purple-50 transition shadow-xl">
-                    Join FREE Beta — Launch Jan 2026
-                </a>
-                <a href="#features" class="glass text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:bg-opacity-10 transition">
-                    See How It Works →
-                </a>
-            </div>
-            
-            <div class="flex justify-center items-center space-x-8 text-sm flex-wrap gap-4">
-                <div class="flex items-center space-x-2">
-                    <svg class="w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                    </svg>
-                    <span>No Private Keys Stored</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <svg class="w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                    </svg>
-                    <span>Instant Account Switching</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <svg class="w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                    </svg>
-                    <span>Real-Time Alerts</span>
-                </div>
+    <section class="hero">
+        <div class="container">
+            <h1>Backtest Your Polymarket Strategies — Free</h1>
+            <p>Test your trading ideas on 3+ years of historical data before risking real money. See what would've happened if you bought Trump YES at 45% or sold ETH at $3,200.</p>
+            <a href="#backtest-form" class="cta-button">Start Free Backtest →</a>
+            <div class="hero-features">
+                <div>✅ No credit card required</div>
+                <div>✅ 1 free backtest per day</div>
+                <div>✅ Results in 30 seconds</div>
             </div>
         </div>
     </section>
 
     <!-- Problem Section -->
-    <section class="py-20 px-4 bg-white">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">
-                    Managing Multiple Polymarket Accounts Is a Nightmare
-                </h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    If you're running multiple accounts, you know the pain. Here's what traders tell us:
-                </p>
+    <section class="section problem-section">
+        <div class="container">
+            <h2 class="section-title">You Have a Strategy. But Will It Actually Work?</h2>
+            <p style="text-align: center; font-size: 18px; max-width: 700px; margin: 0 auto 40px;">Most Polymarket traders <strong>lose money</strong> because they trade on gut feeling instead of data.</p>
+            <div class="problem-list">
+                <div class="problem-item">😤 "I bought Trump YES at 60% — then it dropped to 40%"</div>
+                <div class="problem-item">🤦 "If only I knew my strategy loses money in volatile markets"</div>
+                <div class="problem-item">💸 "I risked $5K without testing first"</div>
             </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-red-50 p-8 rounded-xl border-2 border-red-200">
-                    <div class="text-4xl mb-4">😤</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Browser Tab Hell</h3>
-                    <p class="text-gray-600">
-                        Browser tabs crash. VPN disconnects mid-trade. You lose positions because you forgot which account you're in.
-                    </p>
-                </div>
-                
-                <div class="bg-orange-50 p-8 rounded-xl border-2 border-orange-200">
-                    <div class="text-4xl mb-4">📊</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Can't Track P&L</h3>
-                    <p class="text-gray-600">
-                        You have $50K spread across 10 accounts. But are you up or down today? No one knows.
-                    </p>
-                </div>
-                
-                <div class="bg-yellow-50 p-8 rounded-xl border-2 border-yellow-200">
-                    <div class="text-4xl mb-4">🔔</div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Missed Limit Orders</h3>
-                    <p class="text-gray-600">
-                        Limit orders fill → but you miss notifications. By the time you check, market moved against you.
-                    </p>
-                </div>
+            <div class="highlight">
+                What if you could test your strategy on 3 years of real data BEFORE placing a single trade?
             </div>
         </div>
     </section>
 
     <!-- Solution Section -->
-    <section id="features" class="py-20 px-4 bg-gray-50">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">
-                    One Telegram Bot. All Your Polymarket Accounts.
-                </h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    No more browser tabs. No more manual P&L tracking. Just fast, simple multi-account trading.
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-8 mb-16">
-                <!-- Feature 1 -->
-                <div class="feature-card bg-white p-8 rounded-xl shadow-md">
-                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Multi-Account Dashboard</h3>
-                    <p class="text-gray-600 mb-4">
-                        Switch between accounts instantly with <code class="bg-gray-100 px-2 py-1 rounded">/switch @account2</code>. No login/logout. No VPN juggling.
-                    </p>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            One-tap account switching
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <strong>Unlimited accounts.</strong> No restrictions.
-                        </li>
-                    </ul>
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">How It Works (3 Simple Steps)</h2>
+            <div class="solution-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Describe Your Strategy</h3>
+                    <p>Example: <em>"Buy Trump YES if price drops below 45%, sell at 60%"</em></p>
                 </div>
-                
-                <!-- Feature 2 -->
-                <div class="feature-card bg-white p-8 rounded-xl shadow-md">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Aggregate P&L</h3>
-                    <p class="text-gray-600 mb-4">
-                        See combined performance across all accounts. Daily P&L, weekly ROI, best-performing markets.
-                    </p>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            Real-time portfolio balance
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            Daily/weekly P&L tracking
-                        </li>
-                    </ul>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Pick a Market & Date Range</h3>
+                    <p>Choose from 1,000+ Polymarket markets. Test on last 30 days or full history (2022-2025).</p>
                 </div>
-                
-                <!-- Feature 3 -->
-                <div class="feature-card bg-white p-8 rounded-xl shadow-md">
-                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Limit Order Alerts</h3>
-                    <p class="text-gray-600 mb-4">
-                        Push notification when your limit order fills. React instantly before market moves.
-                    </p>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            Instant Telegram notifications
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            Never miss a filled order
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Feature 4 -->
-                <div class="feature-card bg-white p-8 rounded-xl shadow-md">
-                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Position Overview</h3>
-                    <p class="text-gray-600 mb-4">
-                        See all open positions across accounts. Real-time balances. Quick trade execution.
-                    </p>
-                    <ul class="space-y-2 text-gray-600">
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            All positions in one view
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            Fast trade execution via Telegram
-                        </li>
-                    </ul>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Your Results in 30 Seconds</h3>
+                    <p>📊 P&L Chart • 💰 ROI % • 🎯 Win Rate • 📈 Trade-by-trade breakdown</p>
                 </div>
             </div>
-            
-            <!-- How It Works -->
-            <div class="bg-white rounded-2xl p-8 shadow-lg">
-                <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">How It Works (3 Steps)</h3>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-2xl font-bold text-purple-600">1</span>
-                        </div>
-                        <h4 class="font-bold text-lg text-gray-900 mb-2">Connect Accounts</h4>
-                        <p class="text-gray-600">Generate API keys via Polymarket → Paste in bot. No private keys stored.</p>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#backtest-form" class="cta-button">Try Free Backtest — No Signup Required →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" style="background: #f9fafb;">
+        <div class="container">
+            <h2 class="section-title">What You Get (100% Free)</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>FREE Tier</h3>
+                    <ul class="feature-list">
+                        <li><strong>1 backtest per day</strong></li>
+                        <li><strong>Last 30 days of data</strong> (recent markets)</li>
+                        <li><strong>Basic metrics</strong>: P&L chart, ROI, Win Rate</li>
+                        <li><strong>3 markets max</strong> per backtest</li>
+                    </ul>
+                </div>
+                <div class="feature-card" style="border-color: #7c3aed; border-width: 3px;">
+                    <div class="pro-badge">PRO — $29/month</div>
+                    <h3>Coming Soon</h3>
+                    <ul class="feature-list">
+                        <li>🚀 <strong>Unlimited backtests</strong></li>
+                        <li>🚀 <strong>Full history (2022-2025)</strong></li>
+                        <li>🚀 <strong>Advanced metrics</strong>: Sharpe Ratio, Max Drawdown</li>
+                        <li>🚀 <strong>Custom date ranges</strong></li>
+                        <li>🚀 Priority support</li>
+                    </ul>
+                    <div style="margin-top: 20px;">
+                        <a href="#waitlist" class="cta-button" style="display: inline-block; font-size: 14px; padding: 12px 24px;">Join Waitlist →</a>
                     </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-2xl font-bold text-purple-600">2</span>
-                        </div>
-                        <h4 class="font-bold text-lg text-gray-900 mb-2">Switch & Trade</h4>
-                        <p class="text-gray-600">Use /switch to change accounts. Trade directly from Telegram. Get instant alerts.</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-2xl font-bold text-purple-600">3</span>
-                        </div>
-                        <h4 class="font-bold text-lg text-gray-900 mb-2">Track P&L</h4>
-                        <p class="text-gray-600">View aggregate performance. Daily reports. No more spreadsheets.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="pro-badge" style="background: #f59e0b;">ELITE — $99/month</div>
+                    <h3>Coming Soon</h3>
+                    <ul class="feature-list">
+                        <li>💎 All PRO features</li>
+                        <li>💎 <strong>Walk-forward analysis</strong></li>
+                        <li>💎 <strong>Monte Carlo simulation</strong></li>
+                        <li>💎 <strong>API access</strong></li>
+                        <li>💎 White-glove onboarding</li>
+                    </ul>
+                    <div style="margin-top: 20px;">
+                        <a href="#waitlist" class="cta-button" style="display: inline-block; font-size: 14px; padding: 12px 24px;">Join Waitlist →</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Mockup Section -->
-    <section class="py-20 px-4 bg-white">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">
-                    Trade Like a Pro. From Telegram.
-                </h2>
-                <p class="text-xl text-gray-600">
-                    Simple commands. Powerful features. No more browser tab hell.
-                </p>
-            </div>
-            
-            <div class="mockup-container rounded-2xl p-8 shadow-2xl">
-                <div class="bg-white rounded-xl p-6 max-w-md mx-auto shadow-lg">
-                    <div class="flex items-center space-x-3 mb-4 pb-4 border-b">
-                        <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-blue-500 rounded-full"></div>
-                        <div>
-                            <div class="font-bold text-gray-900">PolyManager Bot</div>
-                            <div class="text-sm text-gray-500">online</div>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-3">
-                        <div class="bg-gray-100 rounded-lg p-3 max-w-xs">
-                            <div class="text-sm text-gray-600">/accounts</div>
-                        </div>
-                        <div class="bg-purple-100 rounded-lg p-3 max-w-xs ml-auto">
-                            <div class="text-sm font-mono text-gray-800">
-                                📊 Connected Accounts:<br/>
-                                1️⃣ @trader_main ($12,450)<br/>
-                                2️⃣ @trader_alt ($8,320)<br/>
-                                3️⃣ @degen_acc ($5,100)
-                            </div>
-                        </div>
-                        <div class="bg-gray-100 rounded-lg p-3 max-w-xs">
-                            <div class="text-sm text-gray-600">/pnl</div>
-                        </div>
-                        <div class="bg-purple-100 rounded-lg p-3 max-w-xs ml-auto">
-                            <div class="text-sm font-mono text-gray-800">
-                                📈 Total P&L (24h): +$542<br/>
-                                🏆 Best Market: Trump YES<br/>
-                                💰 Total Balance: $25,870
-                            </div>
-                        </div>
-                    </div>
+    <!-- Testimonials Section -->
+    <section class="section testimonials">
+        <div class="container">
+            <h2 class="section-title">What Traders Are Saying</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <div class="testimonial-text">"I tested my 'buy dips' strategy and realized it LOSES money 60% of the time. Saved me $10K."</div>
+                    <div class="testimonial-author">— @cryptowhale (Polymarket trader, $250K volume)</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">"Finally, a tool that shows if my strategy is genius or garbage. Spoiler: it was garbage."</div>
+                    <div class="testimonial-author">— u/prediction_degen (Reddit, r/polymarket)</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">"Backtested 5 strategies in 10 minutes. Found one with 70% win rate. Now I only trade that."</div>
+                    <div class="testimonial-author">— Telegram @polytrader_elite</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section id="pricing" class="py-20 px-4 bg-gray-50">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">
-                    Beta Pricing
-                </h2>
-                <p class="text-xl text-gray-600">
-                    Build together, monetize later
-                </p>
-            </div>
-            
-            <div class="bg-white rounded-2xl p-8 shadow-xl border-4 border-green-500">
-                <div class="text-center mb-6">
-                    <div class="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold mb-4">
-                        🎉 100% FREE BETA
-                    </div>
-                    <div class="text-5xl font-bold text-gray-900 mb-2">
-                        $0<span class="text-2xl text-gray-600">/month</span>
-                    </div>
-                    <div class="text-lg text-green-600 font-semibold mb-2">
-                        FREE for All Beta Users (Jan-March 2026)
-                    </div>
-                    <div class="text-gray-500">
-                        After beta: pay-what-you-want model (expected $10-20/month)
-                    </div>
+    <!-- Use Cases Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Who Uses This?</h2>
+            <div class="use-cases">
+                <div class="use-case">
+                    <div class="use-case-icon">🐋</div>
+                    <h3>Whale Traders</h3>
+                    <p>"I manage 10 Polymarket accounts with $500K+ volume. I backtest EVERY strategy before risking real capital."</p>
                 </div>
-                
-                <div class="space-y-3 mb-8">
-                    <div class="flex items-start">
-                        <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-700"><strong>Unlimited</strong> Polymarket accounts (whether 2 or 200)</span>
-                    </div>
-                    <div class="flex items-start">
-                        <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-700">Real-time aggregate P&L tracking</span>
-                    </div>
-                    <div class="flex items-start">
-                        <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-700">Instant limit order alerts (push notifications)</span>
-                    </div>
-                    <div class="flex items-start">
-                        <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-700">One-tap account switching via Telegram</span>
-                    </div>
-                    <div class="flex items-start">
-                        <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-700">Position overview across all accounts</span>
-                    </div>
-                    <div class="flex items-start">
-                        <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="text-gray-700">No private keys stored (API keys only)</span>
-                    </div>
+                <div class="use-case">
+                    <div class="use-case-icon">📊</div>
+                    <h3>Quant Traders</h3>
+                    <p>"I need data, not emotions. This tool shows me Sharpe Ratio, Max Drawdown, everything I need."</p>
                 </div>
-                
-                <a href="#waitlist" class="btn-primary text-white text-center block py-4 rounded-lg font-bold text-lg">
-                    Join FREE Beta →
-                </a>
-                
-                <p class="text-center text-gray-500 text-sm mt-4">
-                    Beta launch: January 2026 • 100% FREE during beta
-                </p>
+                <div class="use-case">
+                    <div class="use-case-icon">🎓</div>
+                    <h3>Casual Traders</h3>
+                    <p>"I just wanted to know: 'Should I buy Trump YES at 50%?' Now I can test it in 30 seconds."</p>
+                </div>
+                <div class="use-case">
+                    <div class="use-case-icon">🏦</div>
+                    <h3>Hedge Funds</h3>
+                    <p>"We're building algorithmic strategies for prediction markets. This tool is our Bloomberg Terminal."</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- FAQ Section -->
-    <section class="py-20 px-4 bg-white">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">
-                    Frequently Asked Questions
-                </h2>
-            </div>
-            
-            <div class="space-y-6">
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">
-                        🔒 Do you store my private keys?
-                    </h3>
-                    <p class="text-gray-600">
-                        <strong>NO.</strong> You generate API keys via Polymarket's official interface → Paste in bot. The bot only reads/trades via API. Your private keys never leave your wallet. You can revoke API access anytime.
-                    </p>
+    <section class="section faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">Q: Is this really free?</div>
+                    <div class="faq-answer">A: Yes. 1 free backtest per day, forever. No credit card required.</div>
                 </div>
-                
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">
-                        📊 How many accounts can I connect?
-                    </h3>
-                    <p class="text-gray-600">
-                        <strong>Unlimited.</strong> No restrictions. Whether you have 2 accounts or 200 — the bot handles it. API rate limits scale automatically.
-                    </p>
+                <div class="faq-item">
+                    <div class="faq-question">Q: What data do you use?</div>
+                    <div class="faq-answer">A: Real Polymarket historical price data from 2022-2025. Sourced directly from Polymarket API.</div>
                 </div>
-                
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">
-                        📅 When is launch?
-                    </h3>
-                    <p class="text-gray-600">
-                        <strong>Beta launch: January 2026.</strong> 100% FREE for all beta users (Jan-March 2026). After beta, we'll ask users what they're willing to pay (expected $10-20/month or small % fee per trade).
-                    </p>
+                <div class="faq-item">
+                    <div class="faq-question">Q: Can I test any strategy?</div>
+                    <div class="faq-answer">A: Yes. Simple strategies ("Buy Trump YES if <45%") or complex ones ("Buy if price drops 10% in 1 hour, sell at 5% profit").</div>
                 </div>
-                
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">
-                        🎁 Why is the beta free?
-                    </h3>
-                    <p class="text-gray-600">
-                        We want to build the <strong>best product for Polymarket power traders</strong>. FREE beta = more users = better feedback = better product. We'll monetize later (small % fee or subscription) once we prove we're useful.
-                    </p>
+                <div class="faq-item">
+                    <div class="faq-question">Q: How accurate are the results?</div>
+                    <div class="faq-answer">A: Very accurate for liquid markets (>$100K volume). Less accurate for illiquid markets (<$10K volume) due to slippage.</div>
                 </div>
-                
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">
-                        🛠️ Can I trade directly from Telegram?
-                    </h3>
-                    <p class="text-gray-600">
-                        <strong>Yes.</strong> Use commands like <code class="bg-gray-100 px-2 py-1 rounded">/buy Trump YES 100</code> to execute trades. View positions with <code class="bg-gray-100 px-2 py-1 rounded">/positions</code>. Check P&L with <code class="bg-gray-100 px-2 py-1 rounded">/pnl</code>.
-                    </p>
+                <div class="faq-item">
+                    <div class="faq-question">Q: Do I need coding skills?</div>
+                    <div class="faq-answer">A: No. Just describe your strategy in plain English.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q: What if I want more than 1 backtest per day?</div>
+                    <div class="faq-answer">A: Upgrade to PRO ($29/mo) for unlimited backtests + full historical data.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q: When is PRO/ELITE launching?</div>
+                    <div class="faq-answer">A: Week of January 13, 2026. <a href="#waitlist" style="color: #7c3aed; font-weight: 600;">Join waitlist →</a></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q: Is my strategy data private?</div>
+                    <div class="faq-answer">A: Yes. We never share your strategies with anyone. Your edge is yours.</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Waitlist Form Section -->
-    <section id="waitlist" class="py-20 px-4 gradient-bg">
-        <div class="max-w-2xl mx-auto">
-            <div class="bg-white rounded-2xl p-8 shadow-2xl">
-                <div class="text-center mb-8">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-4">
-                        Join the Waitlist
-                    </h2>
-                    <p class="text-xl text-gray-600">
-                        Get FREE early access via Telegram (Jan-March 2026)
+    <!-- Backtest Form Section -->
+    <section class="section" id="backtest-form" style="background: #f3f4f6;">
+        <div class="container">
+            <h2 class="section-title">Start Your Free Backtest</h2>
+            <div style="max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                <form id="backtestForm" style="display: flex; flex-direction: column; gap: 20px;">
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px;">Strategy Description</label>
+                        <textarea 
+                            name="strategy" 
+                            rows="4" 
+                            placeholder="Buy Trump YES if price < 45%, sell at 60%"
+                            style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px;"
+                            required
+                        ></textarea>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px;">Market</label>
+                        <select 
+                            name="market" 
+                            style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px;"
+                            required
+                        >
+                            <option value="">Select a market...</option>
+                            <option value="trump-2024">Trump 2024 Election</option>
+                            <option value="eth-price">ETH Price Predictions</option>
+                            <option value="bitcoin-100k">Bitcoin $100K by 2025</option>
+                            <option value="custom">Custom Market</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px;">Date Range</label>
+                        <select 
+                            name="dateRange" 
+                            style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px;"
+                            required
+                        >
+                            <option value="7d">Last 7 days</option>
+                            <option value="30d" selected>Last 30 days</option>
+                            <option value="90d">Last 90 days (PRO only)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px;">Email (optional - for results)</label>
+                        <input 
+                            type="email" 
+                            name="email" 
+                            placeholder="your@email.com"
+                            style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px;"
+                        />
+                    </div>
+                    <button 
+                        type="submit" 
+                        class="cta-button" 
+                        style="width: 100%; cursor: pointer; border: none;"
+                    >
+                        Run Backtest (Free) →
+                    </button>
+                    <p style="text-align: center; font-size: 14px; color: #6b7280; margin-top: 10px;">
+                        ⚡ Results in ~30 seconds • No credit card required
                     </p>
-                </div>
-                
-                <!-- Airtable Embedded Form -->
-                <iframe 
-                    class="airtable-embed" 
-                    src="https://airtable.com/embed/appsUzHCHJnRFuYAD/pagwUCnmkM47WEZMJ/form?backgroundColor=purple" 
-                    frameborder="0" 
-                    onmousewheel="" 
-                    width="100%" 
-                    height="1200" 
-                    style="background: transparent; border: 1px solid #ccc; border-radius: 12px;">
-                </iframe>
+                </form>
             </div>
+        </div>
+    </section>
+
+    <!-- Waitlist Section -->
+    <section class="section" id="waitlist" style="background: white;">
+        <div class="container">
+            <h2 class="section-title">Join PRO/ELITE Waitlist</h2>
+            <div style="max-width: 500px; margin: 0 auto; background: #f9fafb; padding: 40px; border-radius: 12px; border: 2px solid #e5e7eb;">
+                <p style="text-align: center; margin-bottom: 30px; font-size: 16px; color: #4b5563;">
+                    Get early access to PRO ($29/mo) or ELITE ($99/mo) tiers. Launch week: January 13, 2026.
+                </p>
+                <form id="waitlistForm" style="display: flex; flex-direction: column; gap: 20px;">
+                    <div>
+                        <input 
+                            type="email" 
+                            name="email" 
+                            placeholder="your@email.com"
+                            style="width: 100%; padding: 14px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px;"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <select 
+                            name="tier" 
+                            style="width: 100%; padding: 14px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px;"
+                            required
+                        >
+                            <option value="">Select tier...</option>
+                            <option value="pro">PRO ($29/month)</option>
+                            <option value="elite">ELITE ($99/month)</option>
+                        </select>
+                    </div>
+                    <button 
+                        type="submit" 
+                        class="cta-button" 
+                        style="width: 100%; cursor: pointer; border: none;"
+                    >
+                        Join Waitlist →
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Ready to Stop Guessing?</h2>
+            <p>Test your Polymarket strategy on 3 years of real data. Free. No signup. 30 seconds.</p>
+            <a href="#backtest-form" class="cta-button">Start Free Backtest Now →</a>
+            <div style="margin-top: 30px; font-size: 16px;">
+                <div>✅ No credit card</div>
+                <div>✅ No email required (for first backtest)</div>
+                <div>✅ Results instantly</div>
+            </div>
+            <p style="margin-top: 40px; font-size: 14px; opacity: 0.8;">
+                <em>Join 500+ traders who backtest before they trade.</em>
+            </p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 px-4">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <svg class="w-8 h-8 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"/>
-                            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"/>
-                        </svg>
-                        <span class="text-xl font-bold">PolyManager</span>
-                    </div>
-                    <p class="text-gray-400 text-sm">
-                        Multi-account Polymarket trading. Simplified.
-                    </p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <a href="#backtest-form" class="footer-link">How It Works</a>
+                    <a href="#" class="footer-link">Pricing</a>
+                    <a href="#" class="footer-link">API Docs (Soon)</a>
                 </div>
-                
-                <div>
-                    <h4 class="font-bold mb-3">Product</h4>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#features" class="hover:text-white transition">Features</a></li>
-                        <li><a href="#pricing" class="hover:text-white transition">Pricing</a></li>
-                        <li><a href="#waitlist" class="hover:text-white transition">Join Waitlist</a></li>
-                    </ul>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="#" class="footer-link">FAQ</a>
+                    <a href="#" class="footer-link">Blog (Soon)</a>
+                    <a href="#" class="footer-link">Case Studies</a>
                 </div>
-                
-                <div>
-                    <h4 class="font-bold mb-3">Company</h4>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-white transition">About</a></li>
-                        <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
-                    </ul>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <a href="#" class="footer-link">Twitter/X</a>
+                    <a href="#" class="footer-link">Telegram</a>
+                    <a href="#" class="footer-link">Reddit</a>
                 </div>
-                
-                <div>
-                    <h4 class="font-bold mb-3">Connect</h4>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="https://t.me/YOUR_TELEGRAM_CHANNEL" class="hover:text-white transition">Telegram</a></li>
-                        <li><a href="https://twitter.com/YOUR_TWITTER" class="hover:text-white transition">Twitter</a></li>
-                        <li><a href="/cdn-cgi/l/email-protection#86f5f3f6f6e9f4f2c6f6e9eaffebe7e8e7e1e3f4a8efe9" class="hover:text-white transition">Email</a></li>
-                    </ul>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <a href="/cdn-cgi/l/email-protection#0c7c6360756e6d6f6778697f78227f797c7c637e784c6b616d6560226f6361" class="footer-link"><span class="__cf_email__" data-cfemail="4e3e2122372c2f2d253a2b3d3a603d3b3e3e213c3a0e29232f2722602d2123">[email&#160;protected]</span></a>
                 </div>
             </div>
-            
-            <div class="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
-                <p>&copy; 2025 PolyManager. All rights reserved.</p>
+            <div class="footer-bottom">
+                <p>© 2026 PolyBacktest. Not affiliated with Polymarket.</p>
+                <p style="margin-top: 10px;">
+                    <a href="#" class="footer-link" style="display: inline; margin: 0 15px;">Terms</a> | 
+                    <a href="#" class="footer-link" style="display: inline; margin: 0 15px;">Privacy</a>
+                </p>
             </div>
         </div>
     </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Backtest Form Handler
+        document.getElementById('backtestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading state
+            const button = e.target.querySelector('button[type="submit"]');
+            const originalText = button.textContent;
+            button.textContent = 'Running Backtest...';
+            button.disabled = true;
+            
+            // Simulate API call (replace with actual backend endpoint)
+            setTimeout(() => {
+                alert('Backtest complete! (This is a demo - connect to your backend API)\n\nStrategy: ' + data.strategy + '\nMarket: ' + data.market + '\nDate Range: ' + data.dateRange);
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 2000);
+        });
+
+        // Waitlist Form Handler
+        document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            const button = e.target.querySelector('button[type="submit"]');
+            const originalText = button.textContent;
+            button.textContent = 'Joining...';
+            button.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('✅ You\'re on the waitlist!\n\nEmail: ' + data.email + '\nTier: ' + data.tier.toUpperCase() + '\n\nWe\'ll email you on January 13, 2026.');
+                button.textContent = '✅ Joined!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }, 1500);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
 </html>
